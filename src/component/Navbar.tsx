@@ -63,7 +63,7 @@ const handlesignOut=()=>{
             <div>
                 <nav className="bg-[#F7F8F8] ">
 
-                    <div className="h-1 inline-flex mx-32 my-20" >
+                    <div className="h-1 inline-flex mx-32 my-16" >
                         <div className="">
                             <input type="text" name="search" className="w-5/6 mx-72 h-11 p-1 " placeholder="Find Cars,Mobile Phones and more .." />
                         </div>
