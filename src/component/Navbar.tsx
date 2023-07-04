@@ -117,7 +117,7 @@ const handlesignOut=()=>{
                         
                         )}
                         <div className="  text-black "    >
-                            <button className="underline underline-offset-8 font-semibold decoration-2 my-2 ml-10"  >Sell</button>
+                            <button className="underline underline-offset-8 font-semibold decoration-2 my-2 ml-10"  ><Link href="/sell">Sell</Link></button>
                             
                            
                             

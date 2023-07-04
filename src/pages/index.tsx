@@ -6,6 +6,7 @@ import Category from "../Category/category"
 
 
 
+
 export default function Home({user}:any) {
 
   
@@ -15,6 +16,7 @@ export default function Home({user}:any) {
 
    </Layout>
    <Category/>
+   
    </div>
   
   )

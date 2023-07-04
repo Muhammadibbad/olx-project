@@ -16,6 +16,13 @@ const userProfile:Person={
     about:'',
     img:""
 }
+
+const newAd = {
+  mainCategory: null,
+  sub: null,
+  subSub: null,
+}
+
 const profile =createSlice({
       name:"profile",
       initialState:userProfile,
