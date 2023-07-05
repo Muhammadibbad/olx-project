@@ -7,6 +7,7 @@ import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
 import { combineReducers } from "@reduxjs/toolkit";
 import { getDefaultMiddleware } from '@reduxjs/toolkit';
+import idReducer from "./features/id-slice"
 
 
 const persistConfig={
@@ -16,7 +17,8 @@ const persistConfig={
 }
 
 const reducer=combineReducers({
-    profile:profileReducer
+    profile:profileReducer,
+    id:idReducer
 })
 
 const persistedReducer=persistReducer(persistConfig,reducer)

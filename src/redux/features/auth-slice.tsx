@@ -17,11 +17,7 @@ const userProfile:Person={
     img:""
 }
 
-const newAd = {
-  mainCategory: null,
-  sub: null,
-  subSub: null,
-}
+
 
 const profile =createSlice({
       name:"profile",

@@ -3,22 +3,33 @@ import Link from 'next/link'
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import {db} from "../firebase/utils"
 import {useState,useEffect} from "react"
+import { useRouter } from 'next/router';
+import { useDispatch,useSelector } from 'react-redux';
+import { AppDispatch } from '@/redux/store';
+import { addId } from '@/redux/features/id-slice';
 
 const Sell = () => {
 
     const [mainCat,setMainCat]=useState<any>([])
      const [subCat,setSubCat]=useState<any>([])
      const [subCat2,setSubCat2]=useState<any>([])
+     const router=useRouter()
+     const dispatch = useDispatch<AppDispatch>()
+     
 
-   
 
     const fetchSubCat= async (id:any)=>{
         try {
+            dispatch(addId({propertyName:"mainCategory",value:id}))
+            dispatch(addId({propertyName:"subCategory",value:null}))
+            dispatch(addId({propertyName:"sub2Category",value:null}))
+            
             const collectionRef = collection(db, 'Categories'); // Replace 'your-collection' with the actual collection name
           
             const q = query(collectionRef, where('parentId', '==', id));
              const fetchSubCat:any=[]
             const querySnapshot = await getDocs(q);
+            
             querySnapshot.forEach((doc) => {
               const data ={ id: doc.id, ...doc.data() } ;
               
@@ -27,9 +38,18 @@ const Sell = () => {
                fetchSubCat.push(data)
               
             });
-             setSubCat(fetchSubCat);
+            if(fetchSubCat.length > 0){
+              setSubCat(fetchSubCat);
+              
+            }
+            else {
+              
+              // router.push("/Ads/createAd")
+            }
+             
+
+            
             setSubCat2([])
-         
           } catch (error) {
             console.error('Error fetching data:', error);
           }
@@ -37,6 +57,8 @@ const Sell = () => {
 
     const fetchSubCat2= async (id:any)=>{
         try {
+          dispatch(addId({propertyName:"subCategory",value:id}))
+          dispatch(addId({propertyName:"sub2Category",value:null}))
             const collectionRef = collection(db, 'Categories'); // Replace 'your-collection' with the actual collection name
           
             const q = query(collectionRef, where('parentId', '==', id));
@@ -50,12 +72,24 @@ const Sell = () => {
                fetchSubCat2.push(data)
               
             });
-             setSubCat2(fetchSubCat2);
+            if(fetchSubCat2.length > 0){
+              setSubCat2(fetchSubCat2);
+          
+            }
+            else {
+              // router.push("/Ads/createAd")
+            }
+             
           
          
           } catch (error) {
             console.error('Error fetching data:', error);
           }
+    }
+
+    const fetchSubCat3=async(id:any)=>{
+      dispatch(addId({propertyName:"sub2Category",value:id}))
+      // router.push("/Ads/createAd")
     }
   
     useEffect(()=>{
@@ -114,6 +148,7 @@ const Sell = () => {
      <div className='  '> 
       {mainCat.map((item:any)  => (
         <div key={item.id} onClick={() => fetchSubCat(item.id)}>
+          
           <div className='flex border w-[370px] h-12 hover:hover:bg-[#C8F8F6] text-[#2B5A5E] hover:text-black font-serif'>
           <div className='mt-2 ml-5 '><button>{item.name} </button></div>
           <div className='mt-2 ml-auto  '><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -145,7 +180,7 @@ const Sell = () => {
         <div className=''>
         <div className='border h-12 w-[370px] hover:hover:bg-[#C8F8F6] text-[#2B5A5E] hover:text-black font-serif' key={item.id} >
           
-          <button className='mt-2 ml-5'>{item.name} 
+          <button onClick={() => fetchSubCat3(item.id)} className='mt-2 ml-5'>{item.name} 
 </button>
           
 </div>
