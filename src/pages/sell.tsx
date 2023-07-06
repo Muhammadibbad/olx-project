@@ -44,7 +44,7 @@ const Sell = () => {
             }
             else {
               
-              // router.push("/Ads/createAd")
+                router.push("/Ads/createAd")
             }
              
 
@@ -77,7 +77,7 @@ const Sell = () => {
           
             }
             else {
-              // router.push("/Ads/createAd")
+               router.push("/Ads/createAd")
             }
              
           
@@ -89,7 +89,7 @@ const Sell = () => {
 
     const fetchSubCat3=async(id:any)=>{
       dispatch(addId({propertyName:"sub2Category",value:id}))
-      // router.push("/Ads/createAd")
+       router.push("/Ads/createAd")
     }
   
     useEffect(()=>{

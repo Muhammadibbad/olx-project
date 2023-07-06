@@ -9,6 +9,7 @@ const Category = () => {
      const [subCat,setSubCat]=useState<any>([])
      const [subCat2,setSubCat2]=useState<any>([])
      const [catDown,setCatDown]=useState<any>(false)
+     const fetchMainCat:any=[]
      
     const fetchData1 = async () => {
         try {
@@ -16,7 +17,7 @@ const Category = () => {
           
           const q = query(collectionRef, where('level', '==', 0));
           console.log(q)
-           const fetchMainCat:any=[]
+           
           const querySnapshot = await getDocs(q);
           querySnapshot.forEach((doc) => {
             const data ={ id: doc.id, ...doc.data() } ;
@@ -31,9 +32,11 @@ const Category = () => {
           console.error('Error fetching data:', error);
         }
       };
+
+
       
       const handleMainCat= async (e:React.SyntheticEvent)=>{
-        await fetchData1()
+         await fetchData1()
         setCatDown(true)
        console.log("boom",mainCat)
     }
@@ -143,7 +146,7 @@ const Category = () => {
       </div>
       <div className=''>
       {subCat2.map((item:any)  => (
-        <div className=''>
+        <div className='' key={item.id}>
         <div className='border h-10 w-[300px] hover:hover:bg-[#C8F8F6] text-[#2B5A5E] hover:text-black font-serif' key={item.id} >
           
           <button className='mt-2 ml-5'>{item.name} 

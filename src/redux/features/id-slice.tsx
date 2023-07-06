@@ -10,7 +10,7 @@ interface idType {
 
 
 
-const newCat:idType = {
+const newCat:idType ={ 
   mainCategory:null,
   subCategory: null,
   sub2Category:null,
