@@ -147,7 +147,7 @@ const Category = () => {
       <div className=''>
       {subCat2.map((item:any)  => (
         <div className='' key={item.id}>
-        <div className='border h-10 w-[300px] hover:hover:bg-[#C8F8F6] text-[#2B5A5E] hover:text-black font-serif' key={item.id} >
+        <div className='border h-10 w-[300px] hover:hover:bg-[#C8F8F6] text-[#2B5A5E] hover:text-black font-serif ' key={item.id} >
           
           <button className='mt-2 ml-5'>{item.name} 
 </button>
