@@ -8,6 +8,7 @@ import { persistReducer } from 'redux-persist'
 import { combineReducers } from "@reduxjs/toolkit";
 import { getDefaultMiddleware } from '@reduxjs/toolkit';
 import idReducer from "./features/id-slice"
+import adReducer from "./features/ad-slice"
 
 
 const persistConfig={
@@ -18,7 +19,8 @@ const persistConfig={
 
 const reducer=combineReducers({
     profile:profileReducer,
-    id:idReducer
+    id:idReducer,
+    ad:adReducer
 })
 
 const persistedReducer=persistReducer(persistConfig,reducer)

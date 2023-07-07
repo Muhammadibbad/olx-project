@@ -98,7 +98,7 @@ const handlesignOut=()=>{
                                 <li className=" flex p-2 hover:hover:bg-[#C8F8F6] text-[#2B5A5E] hover:text-black h-12 ">
                                     <div className="flex space-x-4 ml-2 ">
                                     <div><svg className="h-6 w-6 text-black"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <rect x="5" y="3" width="14" height="18" rx="2" />  <line x1="9" y1="7" x2="15" y2="7" />  <line x1="9" y1="11" x2="15" y2="11" />  <line x1="9" y1="15" x2="13" y2="15" /></svg></div>
-                                   <div> <a href="">my Ads</a></div>
+                                   <div><Link href="/Ads/myAds"> my Ads </Link></div>
                                    </div>
                                     </li>
                                 <li className="flex p-2 hover:bg-[#C8F8F6] text-[#2B5A5E] hover:text-black  h-12 ">

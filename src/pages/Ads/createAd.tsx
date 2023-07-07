@@ -7,6 +7,10 @@ import { useSelector} from 'react-redux'
 import { db ,storage,firestore} from '@/firebase/utils'
 import { setDoc,getDoc,doc,collection,serverTimestamp } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage"
+import { useRouter } from 'next/router'
+import { GetServerSideProps, NextPage } from 'next';
+import { IncomingMessage, ServerResponse } from 'http';
+import { useGoogleAuth } from '@/firebase/utils'
 
 
 interface Adtype {
@@ -14,7 +18,7 @@ interface Adtype {
   description: string,
   brand: string,
   location: string,
-  img1?:string,
+  img?:string,
   price:number|null,
 
 }
@@ -25,19 +29,21 @@ const initialState: Adtype = {
   brand: "",
   location: "",
   price:null,
-
+  
 
 }
 
-const createAd = () => {
+const createAd:NextPage = () => {
   
 
   const [inputValue, setInputValue] = useState('');
   const [displayCat,setdisplayCat]=useState< { [key: string]: any }>({})
    const [adData,setAdData]=useState<Adtype>(initialState)
+   const {title,description,brand,location,price}=adData
   const [idData,setIdData]=useState<any>([])
-  
+  const router = useRouter();
   const [file, setFile] = useState<any>([])
+  const {userId}=useGoogleAuth()
   console.log("dish==",idData)
   console.log("image==",file)
   const idCat  = useSelector((state: any) => state.id)
@@ -116,6 +122,7 @@ const createAd = () => {
 
     const payload = {
       file,
+      userId,
       mainCat:idCat.mainCategory,
       subCat:idCat.subCategory,
       sub2Cat:idCat.sub2Category,
@@ -131,8 +138,8 @@ const createAd = () => {
       
       
       
-     
-      
+     setAdData(initialState)
+      setInputValue("")
      alert ("Update Successfull")
     
     
@@ -187,6 +194,9 @@ const createAd = () => {
     };
     fetchData()
   },[idCat])
+
+
+  
 
 
   return (
@@ -248,6 +258,7 @@ const createAd = () => {
     type="text"
     id="title"
     name="title"
+    value={title}
     required={true}
     minLength={10}
     maxLength={20}
@@ -260,7 +271,7 @@ const createAd = () => {
   
   
 <label htmlFor="description" className="block mb-2 text-sm  text-gray-900 dark:text-white">Description</label>
-<textarea name="description" onChange={handleChange}  className=" p-2.5 w-[90%] h-[190px] text-sm  text-gray-900  rounded-md border border-black focus:outline-none  focus:ring-0 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write description of your Ad"></textarea>
+<textarea name="description" value={description} onChange={handleChange}  className=" p-2.5 w-[90%] h-[190px] text-sm  text-gray-900  rounded-md border border-black focus:outline-none  focus:ring-0 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write description of your Ad"></textarea>
 
 
 
@@ -273,6 +284,7 @@ const createAd = () => {
     type="text"
     id="brand"
     name="brand"
+    value={brand}
     required={true}
     minLength={10}
     maxLength={20}
@@ -291,6 +303,7 @@ const createAd = () => {
     type="number"
     id="price"
     name="price"
+    
     required={true}
     placeholder='Enter price in Rs'
     minLength={4}
@@ -374,6 +387,7 @@ const createAd = () => {
     type="text"
     id="location"
     name="location"
+    value={location}
     required={true}
     minLength={10}
     maxLength={20}
@@ -400,5 +414,17 @@ const createAd = () => {
     </div>
   )
 }
+
+// export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+//   if ((req as IncomingMessage).url === '/Ads/createAd') {
+//     (res as ServerResponse).setHeader('Location', '/sell');
+//     (res as ServerResponse).statusCode = 302;
+//     (res as ServerResponse).end();
+//   }
+
+//   return {
+//     props: {},
+//   };
+// };
 
 export default createAd

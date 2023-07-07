@@ -6,7 +6,8 @@ interface Person {
     email: string;
     about: string,
     contact: number | null,
-    img:string|null
+    img:string|null,
+   
   }
   
 const userProfile:Person={
@@ -14,7 +15,8 @@ const userProfile:Person={
     email: '',
     contact: null,
     about:'',
-    img:""
+    img:"",
+    
 }
 
 
