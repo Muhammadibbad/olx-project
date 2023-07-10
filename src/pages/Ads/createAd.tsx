@@ -128,6 +128,7 @@ const createAd:NextPage = () => {
       sub2Cat:idCat.sub2Category,
       ...adData,
       timestamp: serverTimestamp()
+      
     }
       
       const userAdded = await setDoc(dbRef, payload);

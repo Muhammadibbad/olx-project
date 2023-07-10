@@ -2,14 +2,17 @@ import React from 'react'
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import {db} from "../firebase/utils"
 import {useState} from "react"
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const Category = () => {
     
      const [mainCat,setMainCat]=useState<any>([])
-     const [subCat,setSubCat]=useState<any>([])
+     const [subCat,setSubCat]=useState<any>([]) 
      const [subCat2,setSubCat2]=useState<any>([])
      const [catDown,setCatDown]=useState<any>(false)
      const fetchMainCat:any=[]
+     const router=useRouter()
      
     const fetchData1 = async () => {
         try {
@@ -41,7 +44,7 @@ const Category = () => {
        console.log("boom",mainCat)
     }
 
-    const fetchSubCat= async (id:any)=>{
+    const fetchSubCat= async (id:any,name:any)=>{
         try {
             const collectionRef = collection(db, 'Categories'); // Replace 'your-collection' with the actual collection name
           
@@ -56,15 +59,24 @@ const Category = () => {
                fetchSubCat.push(data)
               
             });
-             setSubCat(fetchSubCat);
+            console.log("fetch",fetchSubCat)
+            if(fetchSubCat.length>0){
+              setSubCat(fetchSubCat);
             setSubCat2([])
+            }
+            else{
+             router.push(`/${name}`)
+            }
+            // setSubCat(fetchSubCat);
+            // setSubCat2([])
+             
          
           } catch (error) {
             console.error('Error fetching data:', error);
           }
     }
 
-    const fetchSubCat2= async (id:any)=>{
+    const fetchSubCat2= async (id:any,name:any)=>{
         try {
             const collectionRef = collection(db, 'Categories'); // Replace 'your-collection' with the actual collection name
           
@@ -79,7 +91,13 @@ const Category = () => {
                fetchSubCat2.push(data)
               
             });
-             setSubCat2(fetchSubCat2);
+            if(fetchSubCat2.length>0){
+              setSubCat2(fetchSubCat2);
+            }
+            else{
+              router.push(`/${name}`)
+            }
+             
           
          
           } catch (error) {
@@ -93,6 +111,9 @@ const Category = () => {
       setSubCat2([])
     }
     
+    const fetchSubCat3=(item:any,name:any)=>{
+      router.push(`/${name}`)
+    }
 
 
   return (
@@ -111,13 +132,13 @@ const Category = () => {
         </div>
         
     </div> 
-    <div onMouseLeave={handleCatDown} className=' ml-[200px]  '>
+    <div onMouseLeave={handleCatDown} className=' ml-[200px]  w-[56%] relative '>
       {catDown && 
       
-      <div className='flex'>
-     <div className='  '> 
+      <div className='flex '>
+     <div className=' '> 
       {mainCat.map((item:any)  => (
-        <div key={item.id} onClick={() => fetchSubCat(item.id)}>
+        <div key={item.id} onClick={() => fetchSubCat(item.id,item.name)}>
           <div className='flex border w-[300px] h-10 hover:hover:bg-[#C8F8F6] text-[#2B5A5E] hover:text-black font-serif'>
           <div className='mt-2 ml-5 '><button>{item.name} </button></div>
           <div className='mt-2 ml-auto  '><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -132,7 +153,7 @@ const Category = () => {
       </div>
       <div className=' '>
       {subCat.map((item:any)  => (
-        <div className='  ' key={item.id} onClick={() => fetchSubCat2(item.id)}>
+        <div className='  ' key={item.id} onClick={() => fetchSubCat2(item.id,item.name)}>
           <div className='flex border h-10 w-[300px] hover:hover:bg-[#C8F8F6] text-[#2B5A5E] hover:text-black font-serif'>
           <div className='mt-2 ml-5'><button>{item.name} </button></div>
           <div className='mt-2 ml-auto'><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -149,7 +170,7 @@ const Category = () => {
         <div className='' key={item.id}>
         <div className='border h-10 w-[300px] hover:hover:bg-[#C8F8F6] text-[#2B5A5E] hover:text-black font-serif ' key={item.id} >
           
-          <button className='mt-2 ml-5'>{item.name} 
+          <button onClick={()=>fetchSubCat3(item.id,item.name)} className='mt-2 ml-5'>{item.name} 
 </button>
           
 </div>

@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import Head from 'next/head'
 import Layout from '@/component/Layout'
 import Category from "../Category/category"
+import Ad from '@/component/Ad'
 
 
 
@@ -15,7 +16,9 @@ export default function Home({user}:any) {
    <Layout user={user}>
 
    </Layout>
-   <Category/>
+   <div className='z-40'><Category/></div>
+   
+   <div className='z-0'><Ad /></div>
    
    </div>
   
